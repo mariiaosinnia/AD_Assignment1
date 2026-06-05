@@ -73,7 +73,7 @@ CREATE TABLE fraud_alerts (
 
 CREATE TABLE audit_log (
     audit_id BIGSERIAL PRIMARY KEY,
-    customer_id BIGINT REFERENCES customers(customer_id),
+    customer_id BIGINT,
     table_name VARCHAR(100),
     operation VARCHAR(20) CHECK ( operation IN ( 'INSERT', 'UPDATE', 'DELETE' ) ),
     old_value JSON,

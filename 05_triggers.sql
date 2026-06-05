@@ -3,9 +3,17 @@
     LANGUAGE plpgsql
 AS $$
 DECLARE
-    v_score INT;
+    v_score INT := 0;
 BEGIN
-    v_score := calculate_transaction_risk_score(NEW.transaction_id);
+
+    IF NEW.amount > 5000 THEN
+        v_score := v_score + 50;
+    END IF;
+
+    IF is_high_risk_country(NEW.merchant_country) THEN
+        v_score := v_score + 50;
+    END IF;
+
     NEW.risk_score := v_score;
 
     IF v_score >= 50 THEN
